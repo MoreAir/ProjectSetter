@@ -10,6 +10,7 @@ import com.mjj.dao.ProjectSetterDAO;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,11 +52,12 @@ public class MainActivity extends Activity {
 		});
         
         button=(Button) findViewById(R.id.add_btn);
-        button.setOnClickListener(new OnClickListener() {
-			
+        button.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				
+				Intent intent=new Intent();
+				intent.setClass(MainActivity.this, Config1.class);
+				startActivity(intent);
 			}
 		});
         
