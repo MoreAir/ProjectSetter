@@ -1,8 +1,14 @@
 package com.mjj.dao;
 
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Project {
+
+public class Project implements Serializable{
+	
+
+	private static final long serialVersionUID = -5840111518748747629L;
 	
 	public Integer pk;
 	public String name;
@@ -89,7 +95,5 @@ public class Project {
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	
 
 }

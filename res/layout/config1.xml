@@ -5,11 +5,13 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android">
+
 <TextView
 	android:id="@+id/name"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:text="&#35745;&#21010;&#35774;&#32622;" />
+<!-- 标题 -->
 <TextView
 	android:id="@+id/pj_name"
 	android:layout_width="wrap_content"
@@ -20,6 +22,7 @@
 	android:layout_width="124dp"
 	android:layout_height="wrap_content"
 	android:textSize="18sp" />
+<!-- 注释 -->
 <TextView
 	android:id="@+id/comment"
 	android:layout_width="wrap_content"
@@ -34,6 +37,7 @@
 	android:layout_width="218dp"
 	android:layout_height="85dp"
 	android:textSize="18sp" />
+<!-- 计划开始与结束时间 -->
 <TextView
 	android:id="@+id/around"
 	android:layout_width="wrap_content"
@@ -43,7 +47,7 @@
 	android:id="@+id/startTime"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:text="&#24320;&#22987;&#26102;&#38388;:" />
+	android:text="计划开始时间:" />
 <EditText
 	android:id="@+id/startTime_text"
 	android:layout_width="wrap_content"
@@ -53,17 +57,39 @@
 	android:id="@+id/endTime"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:text="&#32467;&#26463;&#26102;&#38388;:" />
+	android:text="计划结束时间:" />
 <EditText
 	android:id="@+id/endTime_text"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:textSize="18sp" />
+<!-- 计划提醒时间 -->
+<TextView
+	android:id="@+id/remind_startTimeView"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="计划开始提醒时间:" />
+<EditText
+	android:id="@+id/remind_startTime_Text"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:textSize="18sp" />
+<TextView
+	android:id="@+id/remind_endTime_view"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="计划结束提醒时间:" />
+<EditText
+	android:id="@+id/remind_endTime_Text"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:textSize="18sp" />
+
 <Button
 	android:id="@+id/nextBt"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:text="&#19979;&#19968;&#27493;" />
+	android:text="完成" />
 
 </TableLayout>
 

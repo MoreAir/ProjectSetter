@@ -1,26 +1,27 @@
 package com.mjj.projectsetter;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import com.mjj.dao.Project;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class Config1 extends Activity {
@@ -33,17 +34,24 @@ public class Config1 extends Activity {
 	private EditText startTime_Text;
 	private EditText endTime_Text;
 	private EditText pjName;
+	private EditText pjComment;
+	private EditText rdstartT;
+	private EditText rdendT;
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
+	private Calendar date=Calendar.getInstance(Locale.CHINA);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.config1);
 		nextBt=(Button) findViewById(R.id.nextBt);
+		
 		startTime_Text=(EditText) findViewById(R.id.startTime_text);
 		endTime_Text=(EditText) findViewById(R.id.endTime_text);
-		Calendar date=Calendar.getInstance(Locale.CHINA);
+		
+		rdstartT=(EditText) findViewById(R.id.remind_startTime_Text);
+		rdendT=(EditText) findViewById(R.id.remind_endTime_Text);
+		
 		Date nowDate=new Date();
 		date.setTime(nowDate);				
 		year=date.get(Calendar.YEAR);
@@ -53,8 +61,11 @@ public class Config1 extends Activity {
 		startTime_Text.setText(year+"-"+(month+1)+"-"+day);
 		endTime_Text.setText(year+"-"+(month+1)+"-"+day);
 		
-		setTextViewClickEvent(startTime_Text);
-		setTextViewClickEvent(endTime_Text);
+		setDateTextViewClickEvent(startTime_Text);
+		setDateTextViewClickEvent(endTime_Text);
+		
+		setTimeEditTextClickEvet(rdstartT);
+		setTimeEditTextClickEvet(rdendT);
 		
 		nextBt.setOnClickListener(new OnClickListener() {
 			@Override
@@ -62,17 +73,56 @@ public class Config1 extends Activity {
 				boolean flag=isNext();
 				System.out.println(flag);
 				if(flag){
-					
+					Project pj=new Project();
+					pj.setName(pjName.getText().toString());
+					pjComment=(EditText) findViewById(R.id.comment_text);
+					pj.setComment(pjComment.toString());
+					Timestamp startTsp=Timestamp.valueOf(startTime_Text.getText().toString());
+					pj.setStartTime(startTsp);
+					Timestamp endTsp=Timestamp.valueOf(endTime_Text.getText().toString());
+					pj.setEndTime(endTsp);
+
 				}
 			}
 		});
 		
 	}
 
-	public void setTextViewClickEvent(final EditText editText){
+	public void setTimeEditTextClickEvet(final EditText et){
+		
+		et.setFocusableInTouchMode(false);
+		
+		date.setTimeInMillis(System.currentTimeMillis());
+		int hour=date.get(Calendar.HOUR_OF_DAY);
+		int minute=date.get(Calendar.MINUTE);
+		final TimePickerDialog timePickerDialog=new TimePickerDialog(Config1.this, new OnTimeSetListener() {			
+			@Override
+			public void onTimeSet(TimePicker view, int hourOfDay, int minuteIn) {
+				date.setTimeInMillis(System.currentTimeMillis());
+				date.set(Calendar.HOUR_OF_DAY, hourOfDay);
+				date.set(Calendar.MINUTE, minuteIn);
+				date.set(Calendar.SECOND, 0);
+				date.set(Calendar.MILLISECOND, 0);
+				et.setText(hourOfDay+":"+minuteIn);
+			}
+		}, hour, minute, true);
+		
+		et.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				timePickerDialog.show();
+			}
+		});
+		
+		
+}
+
+	
+	public void setDateTextViewClickEvent(final EditText editText){
 		
 		editText.setFocusableInTouchMode(false);
-		Calendar date=Calendar.getInstance(Locale.CHINA);
+
 		Date nowDate=new Date();
 		date.setTime(nowDate);				
 		year=date.get(Calendar.YEAR);
@@ -120,63 +170,10 @@ public class Config1 extends Activity {
 		}
 	};
 	
-	private void updateTextView(EditText edText,int yearChoose,int monthOfYear,int dayOfMonth){
-		System.out.println(edText.getId());
-		Calendar date=Calendar.getInstance(Locale.CHINA);
-		Date nowDate=new Date();
-		date.setTime(nowDate);	
-		int yearNow=date.get(Calendar.YEAR);
-		int monthNow=date.get(Calendar.MONTH);
-		int dayNow=date.get(Calendar.DAY_OF_MONTH);
-		edText.setText(yearChoose+"-"+(monthOfYear+1)+"-"+dayOfMonth);
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date pickerTime = null;
-		try {
-			pickerTime = df.parse(edText.getText().toString());
-			System.out.println(edText.getText().toString());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(pickerTime.getTime()+" ,"+nowDate.getTime());
-		
-		if(pickerTime.getTime()<nowDate.getTime()){
-			Toast toast=Toast.makeText(getApplicationContext(),"日期不能小于今天！", Toast.LENGTH_SHORT);
-				  toast.setGravity(Gravity.BOTTOM, 0, 0);
-				  toast.show();
-			edText.setText(yearNow+"-"+(monthNow+1)+"-"+dayNow);
-		}else{
-			edText.setText(yearChoose+"-"+(monthOfYear+1)+"-"+dayOfMonth);
-		}
-//		if(edText.getId()==R.id.startTime_text){
-//			if(pickerTimeSum<nowDateSum){
-//				startSumTime=nowDateSum;
-//			}else{
-//				startSumTime=pickerTimeSum;
-//			}
-//		}
-//		if(edText.getId()==R.id.endTime_text){
-//			if(pickerTimeSum<startSumTime){
-//				Toast toast=Toast.makeText(getApplicationContext(),"结束日期不能小于开始日期！", Toast.LENGTH_SHORT);
-//				  toast.setGravity(Gravity.BOTTOM, 0, 0);
-//				  toast.show();
-//				  edText.setText(yearNow+"-"+(monthNow+1)+"-"+dayNow);
-//			}
-//		}else{
-//			if(pickerTimeSum>endSumTime){
-//				Toast toast=Toast.makeText(getApplicationContext(),"开始日期不能大于结束日期！", Toast.LENGTH_SHORT);
-//				  toast.setGravity(Gravity.BOTTOM, 0, 0);
-//				  toast.show();
-//				  edText.setText(yearNow+"-"+(monthNow+1)+"-"+dayNow);
-//			}
-//		}
-	}
-	
 	public boolean isNext(){
 		boolean flag=true;
 		pjName=(EditText) findViewById(R.id.name_text);
 		
-		Calendar date=Calendar.getInstance(Locale.CHINA);
 		Date nowDate=new Date();
 		date.setTime(nowDate);	
 		int yearNow=date.get(Calendar.YEAR);
