@@ -21,7 +21,7 @@ public class ProjectSetterDAO {
 	}
 
 	public void add(Project pj){
-		
+		Log.v(TAG, "开始保存……");
 		db.beginTransaction();
 		
 		Object [] param=new Object[]{
@@ -57,8 +57,8 @@ public class ProjectSetterDAO {
 			pj.comment=cursor.getString(cursor.getColumnIndex("COMMENT"));
 			pj.startTime=Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("STARTTIME")));
 			pj.endTime=Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("ENDTIME")));
-			pj.remindStartTime=Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("REMIND_STARTTIME")));
-			pj.remindEndTime=Timestamp.valueOf(cursor.getString(cursor.getColumnIndex("REMIND_ENDTIME")));
+			pj.remindStartTime=cursor.getString(cursor.getColumnIndex("REMIND_STARTTIME"));
+			pj.remindEndTime=cursor.getString(cursor.getColumnIndex("REMIND_ENDTIME"));
 			pj.state=cursor.getString(cursor.getColumnIndex("STATE"));
 			pj.custom1=cursor.getString(cursor.getColumnIndex("CUSTOM1"));
 			pj.custom2=cursor.getString(cursor.getColumnIndex("CUSTOM2"));

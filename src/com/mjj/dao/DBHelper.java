@@ -27,8 +27,8 @@ public class DBHelper extends SQLiteOpenHelper {
 				"COMMENT TEXT," +
 				"STARTTIME TIMESTAMP," +
 				"ENDTIME TIMESTAMP," +
-				"REMIND_STARTTIME TIMESTAMP," +
-				"REMIND_ENDTIME TIMESTAMP," +
+				"REMIND_STARTTIME VARCHAR," +
+				"REMIND_ENDTIME VARCHAR," +
 				"STATE VARCHAR," +
 				"CUSTOM1 TEXT," +
 				"CUSTOM2 TEXT," +
@@ -37,7 +37,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
 
 	}
 

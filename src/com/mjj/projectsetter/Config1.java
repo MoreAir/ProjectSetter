@@ -8,11 +8,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import com.mjj.dao.Project;
+import com.mjj.dao.ProjectSetterDAO;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.view.Gravity;
@@ -38,12 +41,16 @@ public class Config1 extends Activity {
 	private EditText rdstartT;
 	private EditText rdendT;
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private DateFormat tsdfdate = new SimpleDateFormat("hh:mm");
 	private Calendar date=Calendar.getInstance(Locale.CHINA);
+	
+	private ProjectSetterDAO pjDAO;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.config1);
+		pjDAO=new ProjectSetterDAO(this);
 		nextBt=(Button) findViewById(R.id.nextBt);
 		
 		startTime_Text=(EditText) findViewById(R.id.startTime_text);
@@ -71,17 +78,24 @@ public class Config1 extends Activity {
 			@Override
 			public void onClick(View v) {
 				boolean flag=isNext();
-				System.out.println(flag);
 				if(flag){
 					Project pj=new Project();
 					pj.setName(pjName.getText().toString());
 					pjComment=(EditText) findViewById(R.id.comment_text);
 					pj.setComment(pjComment.toString());
-					Timestamp startTsp=Timestamp.valueOf(startTime_Text.getText().toString());
-					pj.setStartTime(startTsp);
-					Timestamp endTsp=Timestamp.valueOf(endTime_Text.getText().toString());
-					pj.setEndTime(endTsp);
-
+					try {
+						Timestamp startTsp =Timestamp.valueOf(startTime_Text.getText().toString()+" 00:00:00");
+						pj.setStartTime(startTsp);
+						Timestamp endTsp=Timestamp.valueOf(endTime_Text.getText().toString()+" 59:59:59");
+						pj.setEndTime(endTsp);
+						pj.setRemindStartTime(rdstartT.getText().toString());
+						pj.setRemindEndTime(rdendT.getText().toString());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}					
+					pjDAO.add(pj);
+					Intent intent=new Intent(Config1.this,MainActivity.class);
+					startActivity(intent);
 				}
 			}
 		});

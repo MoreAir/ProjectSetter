@@ -15,8 +15,8 @@ public class Project implements Serializable{
 	public String comment;
 	public Timestamp startTime;
 	public Timestamp endTime;
-	public Timestamp remindStartTime;
-	public Timestamp remindEndTime;
+	public String remindStartTime;
+	public String remindEndTime;
 	public String state;
 	public String custom1;
 	public String custom2;
@@ -57,18 +57,27 @@ public class Project implements Serializable{
 	public void setEndTime(Timestamp endTime) {
 		this.endTime = endTime;
 	}
-	public Timestamp getRemindStartTime() {
+
+	public String getRemindStartTime() {
 		return remindStartTime;
 	}
-	public void setRemindStartTime(Timestamp remindStartTime) {
+
+
+	public void setRemindStartTime(String remindStartTime) {
 		this.remindStartTime = remindStartTime;
 	}
-	public Timestamp getRemindEndTime() {
+
+
+	public String getRemindEndTime() {
 		return remindEndTime;
 	}
-	public void setRemindEndTime(Timestamp remindEndTime) {
+
+
+	public void setRemindEndTime(String remindEndTime) {
 		this.remindEndTime = remindEndTime;
 	}
+
+
 	public String getCustom1() {
 		return custom1;
 	}

@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-    <TextView 
-        android:id="@+id/name"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:textSize="20sp"
-        />
-    <TextView 
-        android:id="@+id/endTime"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
-        />
-    
+    android:layout_height="fill_parent"
+    android:stretchColumns="1" >
 
-</RelativeLayout>
+    <!-- 设置布局 -->
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="HAHA" />
+
+        <TextView
+            android:id="@+id/remindStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HAHA" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="50px"
+            android:text="HAHA" />
+
+        <TextView
+            android:id="@+id/remindEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HAHA" />
+    </TableRow>
+
+</TableLayout>
